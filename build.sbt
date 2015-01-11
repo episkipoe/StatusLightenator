@@ -11,3 +11,5 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
 
+libraryDependencies += "com.google.code.gson" % "gson" % "2.2"
+

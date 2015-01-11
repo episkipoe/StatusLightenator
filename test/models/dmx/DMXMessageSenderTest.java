@@ -1,9 +1,8 @@
 package models.dmx;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
-public class DMXMessageSenderTest extends TestCase {
+public class DMXMessageSenderTest {
 
     @Test
     public void testSend() {
