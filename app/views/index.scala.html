@@ -1,0 +1,29 @@
+@(devices: List[dmx.DMXDevice], deviceForm: Form[dmx.DMXDevice])
+
+@import helper._
+
+@main("Status Lightenator") {
+	<script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+
+	@form(routes.Application.addDevice()) {
+		@inputText(deviceForm("ipAddress"))
+		<input type="submit" value="Add Device"/>
+	}
+
+
+	<ul>
+		@for(device <- devices) {
+			<li>
+				@device.ipAddress
+				@device.packetsSent
+				@form(routes.Application.sendPacket(device.id)) {
+					<input type = "submit" value = "Send" />
+				}
+				@form(routes.Application.deleteDevice(device.id)) {
+					<input type = "submit" value = "Remove" />
+				}
+			</li>
+		}
+	</ul>
+
+}
