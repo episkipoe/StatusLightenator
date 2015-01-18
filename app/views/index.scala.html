@@ -1,29 +1,60 @@
-@(devices: List[dmx.DMXDevice], deviceForm: Form[dmx.DMXDevice])
+@(devices: List[dmx.DMXDevice], deviceForm: Form[dmx.DMXDevice], statuses: List[status.Status], temperatureForm: Form[weather.Temperature])
 
 @import helper._
 
 @main("Status Lightenator") {
-	<script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+<script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
 
-	@form(routes.Application.addDevice()) {
-		@inputText(deviceForm("ipAddress"))
-		<input type="submit" value="Add Device"/>
-	}
-
-
-	<ul>
-		@for(device <- devices) {
-			<li>
-				@device.ipAddress
-				@device.packetsSent
-				@form(routes.Application.sendPacket(device.id)) {
-					<input type = "submit" value = "Send" />
-				}
-				@form(routes.Application.deleteDevice(device.id)) {
-					<input type = "submit" value = "Remove" />
-				}
-			</li>
-		}
-	</ul>
-
+@form(routes.Devices.addDevice()) {
+@inputText(deviceForm("ipAddress"))
+<input type="submit" value="Add Device"/>
 }
+
+<br/>
+<table>
+    <tr>
+        <td><b>IP</b></td>
+        <td><b>Packets sent</b></td>
+    </tr>
+    @for(device <- devices) {
+    <tr>
+        <td>@device.ipAddress</td>
+        <td>@device.packetsSent</td>
+        <td>@form(routes.Devices.sendPacket(device.id)) {
+            <input type="submit" value="Send"/>
+            }
+        </td>
+        <td>@form(routes.Devices.deleteDevice(device.id)) {
+            <input type="submit" value="Remove"/>
+            }
+        </td>
+    </tr>
+    }
+
+    <br/>
+
+    @form(routes.Statuses.addTemperature()) {
+    <input type="submit" value="Add Temperature"/>
+    }
+
+    <br/>
+
+    <table>
+        <tr>
+            <td><b>Source</b></td>
+            <td><b>Lights</b></td>
+        </tr>
+        @for(status <- statuses) {
+        <tr>
+            <td>@status.name</td>
+            <td>@status.getLights() and @status.data</td>
+            <td>@form(routes.Statuses.deleteStatus(status.id)) {
+                <input type="submit" value="Remove"/>
+                }
+            </td>
+        </tr>
+        }
+
+    </table>
+
+    }

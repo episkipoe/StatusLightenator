@@ -4,10 +4,13 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-POST    /device                     controllers.Application.addDevice()
-GET     /devices                    controllers.Application.getDevices
-POST    /devices/:id/delete         controllers.Application.deleteDevice(id: Long)
-POST    /devices/:id/send           controllers.Application.sendPacket(id: Long)
+POST    /device                     controllers.Devices.addDevice()
+GET     /devices                    controllers.Devices.getDevices
+POST    /devices/:id/delete         controllers.Devices.deleteDevice(id: Long)
+POST    /devices/:id/send           controllers.Devices.sendPacket(id: Long)
+POST    /status                     controllers.Statuses.addTemperature()
+GET     /status                     controllers.Statuses.getStatuses()
+POST    /status/:id/delete          controllers.Statuses.deleteStatus(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
