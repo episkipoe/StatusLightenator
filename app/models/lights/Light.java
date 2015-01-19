@@ -3,12 +3,12 @@ package models.lights;
 import java.awt.*;
 
 public class Light {
-	public final Color color;
+	private final Color color;
 
-	public static Light WHITE = new Light(Color.WHITE);
-	public static Light RED = new Light(Color.RED);
-	public static Light GREEN = new Light(Color.GREEN);
-	public static Light BLUE = new Light(Color.BLUE);
+	public static final Light WHITE = new Light(Color.WHITE);
+	public static final Light RED = new Light(Color.RED);
+	public static final Light GREEN = new Light(Color.GREEN);
+	public static final Light BLUE = new Light(Color.BLUE);
 
 	public Light(Color color) {
 		this.color = color;

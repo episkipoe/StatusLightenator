@@ -31,11 +31,11 @@ public class DMXMessage {
 
 	//dmxSend: IP address [universe=0] [offset] [packets to send = 100] [milliseconds between packets = 100] [RGB values]
 	public String toParameterList() {
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(ipAddress + " " + universe + " " + offset + " " + packetsToSend + " " + millisBetweenPackets);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(ipAddress).append(" ").append(universe).append(" ").append(offset).append(" ").append(packetsToSend).append(" ").append(millisBetweenPackets);
 		for (Light l : lights) {
-			stringBuffer.append(" ").append(l.toRGBString());
+			stringBuilder.append(" ").append(l.toRGBString());
 		}
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

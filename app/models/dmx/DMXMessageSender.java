@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 public class DMXMessageSender {
 	private final ExecutorService executor = Executors.newCachedThreadPool();
-	private final static String PROGRAM_NAME = "dmxSend ";
+	private static final String PROGRAM_NAME = "dmxSend ";
 
 	public static class CommandThread implements Runnable {
 		private final String command;

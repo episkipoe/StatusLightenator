@@ -1,6 +1,6 @@
 package models.dmx;
 
-import play.data.validation.Constraints;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -15,11 +15,11 @@ public class DMXDevice extends Model {
 	@Id
 	public Long id;
 
-	@Constraints.Required
+	@Required
 	public String ipAddress;
 	public int packetsSent = 0;
 
-	public static Finder<Long, DMXDevice> find = new Finder(
+	public static final Finder<Long, DMXDevice> find = new Finder(
 			Long.class, DMXDevice.class
 	);
 

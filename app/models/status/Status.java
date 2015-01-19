@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -15,7 +17,7 @@ public class Status extends Model {
 	@Id
 	public Long id;
 
-	public String name;
+	public final String name;
 	@OneToOne(cascade = CascadeType.PERSIST)
 	public GeneratesLights lightSource;
 
@@ -32,16 +34,16 @@ public class Status extends Model {
 		return find.all();
 	}
 
-	public String getLights() {
+	public List<String> getLights() {
 		if (lightSource == null) {
-			return "*";
+			return Arrays.asList("*");
 		} else {
-			StringBuffer stringBuffer = new StringBuffer();
+			List<String> lights = new ArrayList<>();
 			GeneratesLights generatesLights = lightSource;
 			for (Light l : generatesLights.getLights()) {
-				stringBuffer.append(l.toHexString() + " ");
+				lights.add(l.toHexString());
 			}
-			return stringBuffer.toString();
+			return lights;
 		}
 	}
 

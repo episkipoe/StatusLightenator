@@ -1,60 +1,87 @@
-@(devices: List[dmx.DMXDevice], deviceForm: Form[dmx.DMXDevice], statuses: List[status.Status], temperatureForm: Form[weather.Temperature])
+@(devices: List[dmx.DMXDevice], deviceForm: Form[dmx.DMXDevice], statuses: List[status.Status], statusData: Map[String, controllers.Statuses.StatusData])
 
 @import helper._
 
 @main("Status Lightenator") {
-<script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+    <link rel='stylesheet' href='@routes.Assets.at("stylesheets/main.css")'/>
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
 
-@form(routes.Devices.addDevice()) {
-@inputText(deviceForm("ipAddress"))
-<input type="submit" value="Add Device"/>
-}
-
-<br/>
-<table>
-    <tr>
-        <td><b>IP</b></td>
-        <td><b>Packets sent</b></td>
-    </tr>
-    @for(device <- devices) {
-    <tr>
-        <td>@device.ipAddress</td>
-        <td>@device.packetsSent</td>
-        <td>@form(routes.Devices.sendPacket(device.id)) {
-            <input type="submit" value="Send"/>
-            }
-        </td>
-        <td>@form(routes.Devices.deleteDevice(device.id)) {
-            <input type="submit" value="Remove"/>
-            }
-        </td>
-    </tr>
+    @form(routes.Devices.addDevice()) {
+        @inputText(deviceForm("ipAddress"), '_label -> "IP Address")
+        <input type="submit" value="Add Device"/>
     }
 
     <br/>
-
-    @form(routes.Statuses.addTemperature()) {
-    <input type="submit" value="Add Temperature"/>
+    @if(!devices.isEmpty()) {
+        <table>
+            <tr>
+                <td><b>IP</b></td>
+                <td><b>Packets sent</b></td>
+            </tr>
+            @for(device <- devices) {
+            <tr>
+                <td>@device.ipAddress</td>
+                <td>@device.packetsSent</td>
+                <td>@form(routes.Devices.sendPacket(device.id)) {
+                    <input type="submit" value="Send"/>
+                    }
+                </td>
+                <td>@form(routes.Devices.deleteDevice(device.id)) {
+                    <input type="submit" value="Remove"/>
+                    }
+                </td>
+            </tr>
+            }
+        </table>
     }
-
     <br/>
 
-    <table>
-        <tr>
-            <td><b>Source</b></td>
-            <td><b>Lights</b></td>
-        </tr>
-        @for(status <- statuses) {
-        <tr>
-            <td>@status.name</td>
-            <td>@status.getLights() and @status.data</td>
-            <td>@form(routes.Statuses.deleteStatus(status.id)) {
-                <input type="submit" value="Remove"/>
-                }
-            </td>
-        </tr>
+    @if(statusData.get("summoner").isAvailable) {
+        @form(routes.Statuses.addSummoner()) {
+            @inputText(statusData.get("summoner").form("name"), '_label -> "Summoner name")
+            <input type="submit" value="Add Summoner"/>
         }
-
-    </table>
-
+    } else {
+        Set the RIOT_API_KEY environment variable to add LOL summoners
     }
+
+    @if(statusData.get("temperature").isAvailable) {
+        @form(routes.Statuses.addTemperature()) {
+            @inputText(statusData.get("temperature").form("city"))
+            <input type="submit" value="Add Temperature"/>
+        }
+    } else {
+        Set the OPEN_WEATHER_KEY environment variable to add temperatures from openweathermap.org
+    }
+
+    <br/>
+    <br/>
+    @if(!statuses.isEmpty()) {
+        <table>
+            <tr>
+                <td><b>Source</b></td>
+                <td><b>Lights</b></td>
+            </tr>
+            @for(status <- statuses) {
+            <tr>
+                <td>@status.name</td>
+                <td>
+                @for(index <- 0 until status.getLights().size) {
+                    <font color=@status.getLights()(index)>*</font>
+                }
+                </td>
+                <td>@form(routes.Statuses.update(status.id)) {
+                    <input type="submit" value="Update"/>
+                    }
+                </td>
+                <td>@form(routes.Statuses.deleteStatus(status.id)) {
+                    <input type="submit" value="Remove"/>
+                    }
+                </td>
+            </tr>
+            }
+
+        </table>
+    }
+
+}
