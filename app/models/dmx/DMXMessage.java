@@ -2,7 +2,6 @@ package models.dmx;
 
 import models.lights.Light;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,13 +15,6 @@ public class DMXMessage {
 	private static final int packetsToSend = 1;
 	private static final int millisBetweenPackets = 1;
 	private final List<Light> lights;
-
-	public DMXMessage(String ipAddress) {
-		this.ipAddress = ipAddress;
-		lights = new ArrayList<>();
-		lights.add(new Light(100, 100, 100));
-
-	}
 
 	public DMXMessage(String ipAddress, List<Light> lights) {
 		this.ipAddress = ipAddress;

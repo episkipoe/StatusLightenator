@@ -22,7 +22,7 @@
             <tr>
                 <td>@device.ipAddress</td>
                 <td>@device.packetsSent</td>
-                <td>@form(routes.Devices.sendPacket(device.id)) {
+                <td>@form(routes.Application.send(device.id)) {
                     <input type="submit" value="Send"/>
                     }
                 </td>

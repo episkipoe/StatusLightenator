@@ -5,6 +5,7 @@ import java.awt.*;
 public class Light {
 	private final Color color;
 
+	public static final Light BLACK = new Light(Color.BLACK);
 	public static final Light WHITE = new Light(Color.WHITE);
 	public static final Light RED = new Light(Color.RED);
 	public static final Light GREEN = new Light(Color.GREEN);

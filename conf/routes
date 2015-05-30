@@ -7,7 +7,7 @@ GET     /                               controllers.Application.index()
 POST    /device                         controllers.Devices.addDevice()
 GET     /devices                        controllers.Devices.getDevices
 POST    /devices/:id/delete             controllers.Devices.deleteDevice(id: Long)
-POST    /devices/:id/send               controllers.Devices.sendPacket(id: Long)
+POST    /devices/:id/send               controllers.Application.send(id: Long)
 POST    /status/addTemperature          controllers.Statuses.addTemperature()
 POST    /status/addSummoner             controllers.Statuses.addSummoner()
 GET     /status                         controllers.Statuses.getStatuses()

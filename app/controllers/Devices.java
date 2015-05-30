@@ -13,7 +13,7 @@ import static play.libs.Json.toJson;
 
 public class Devices extends Controller {
 	public static final Form<DMXDevice> deviceForm = Form.form(DMXDevice.class);
-	private static final DMXMessageSender messageSender = new DMXMessageSender();
+	public static final DMXMessageSender messageSender = new DMXMessageSender();
 
 	public static Result addDevice() {
 		Form<DMXDevice> filledForm = deviceForm.bindFromRequest();
@@ -32,11 +32,6 @@ public class Devices extends Controller {
 
 	public static Result deleteDevice(Long id) {
 		DMXDevice.find.ref(id).delete();
-		return redirect(routes.Application.index());
-	}
-
-	public static Result sendPacket(Long id) {
-		DMXDevice.find.ref(id).sendPacket(messageSender);
 		return redirect(routes.Application.index());
 	}
 

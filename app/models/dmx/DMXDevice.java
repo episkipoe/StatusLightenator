@@ -1,5 +1,6 @@
 package models.dmx;
 
+import models.lights.Light;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -35,8 +36,8 @@ public class DMXDevice extends Model {
 		this.ipAddress = ipAddress;
 	}
 
-	public void sendPacket(DMXMessageSender messageSender) {
-		messageSender.send(new DMXMessage(getIpAddress()));
+	public void send(DMXMessageSender messageSender, List<Light> lights) {
+		messageSender.send(new DMXMessage(getIpAddress(), lights));
 		packetsSent++;
 		update();
 	}
