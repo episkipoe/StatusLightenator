@@ -12,7 +12,7 @@
 using namespace std;
 
 const size_t PACKET_SIZE = 550;
-const size_t COLORS_IN_UNIVERSEe = 510 * 3;  // 510 lights by R G B
+const size_t COLORS_IN_UNIVERSE = 510 * 3;  // 510 lights by R G B
 
 /**
  * Writes UDP data to specified IP address, port 6454
@@ -21,7 +21,7 @@ int main(int argc, char**argv) {
 	struct sockaddr_in servaddr,cliaddr;
 	uint16_t universe;
 	size_t offset = 0;
-	unsigned char data[COLORS_IN_UNIVERSEe];
+	unsigned char data[COLORS_IN_UNIVERSE];
 	size_t packetsToSend = 100;
 	size_t milliBetweenPackets = 100;
 
@@ -42,11 +42,11 @@ int main(int argc, char**argv) {
 	if(argc>5) {
 		milliBetweenPackets = atoi(argv[5]);
 	}
-	memset(data, 0, COLORS_IN_UNIVERSEe);
+	memset(data, 0, COLORS_IN_UNIVERSE);
 	if(argc > 6) {
 		size_t index = offset;
 		for (size_t i = 6 ; i < argc;) {
-			if (index >= COLORS_IN_UNIVERSEe) {
+			if (index >= COLORS_IN_UNIVERSE) {
 				cerr << "Invalid light specified"<<endl;
 				exit(1);
 			}
@@ -70,7 +70,7 @@ int main(int argc, char**argv) {
 	memset(packetData, 0, PACKET_SIZE);
 	strcpy(packetData, "Art-Net");	
 	memcpy(&packetData[14], &universe, sizeof(universe));
-	memcpy(&packetData[18], &data, COLORS_IN_UNIVERSEe);
+	memcpy(&packetData[18], &data, COLORS_IN_UNIVERSE);
 	for(size_t i = 0 ; i < packetsToSend ; i++) {
 		//cout<<"sending "<<i<<endl;
 		sendto(sockfd,packetData,PACKET_SIZE,0, (struct sockaddr *)&servaddr,sizeof(servaddr));
