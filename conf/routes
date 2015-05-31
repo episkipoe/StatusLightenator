@@ -10,6 +10,7 @@ POST    /devices/:id/delete             controllers.Devices.deleteDevice(id: Lon
 POST    /devices/:id/send               controllers.Application.send(id: Long)
 POST    /status/addTemperature          controllers.Statuses.addTemperature()
 POST    /status/addSummoner             controllers.Statuses.addSummoner()
+POST    /status/addGame                 controllers.Statuses.addGame()
 GET     /status                         controllers.Statuses.getStatuses()
 POST    /status/:id/delete              controllers.Statuses.deleteStatus(id: Long)
 POST    /status/:id/update              controllers.Statuses.update(id: Long)

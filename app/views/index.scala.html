@@ -39,7 +39,7 @@
     @if(statusData.get("summoner").isAvailable) {
         @form(routes.Statuses.addSummoner()) {
             @inputText(statusData.get("summoner").form("name"), '_label -> "Summoner name")
-            <input type="submit" value="Add Summoner"/>
+            <input type="submit" value="Add summoner"/>
         }
     } else {
         Set the RIOT_API_KEY environment variable to add LOL summoners
@@ -48,10 +48,15 @@
     @if(statusData.get("temperature").isAvailable) {
         @form(routes.Statuses.addTemperature()) {
             @inputText(statusData.get("temperature").form("city"))
-            <input type="submit" value="Add Temperature"/>
+            <input type="submit" value="Add temperature"/>
         }
     } else {
         Set the OPEN_WEATHER_KEY environment variable to add temperatures from openweathermap.org
+    }
+
+    @form(routes.Statuses.addGame()) {
+        @inputText(statusData.get("game").form("baseURL"), '_label -> "Server URL")
+        <input type="submit" value="Add card game"/>
     }
 
     <br/>

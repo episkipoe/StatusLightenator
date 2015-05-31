@@ -1,5 +1,6 @@
 package controllers;
 
+import models.cards.CardGames;
 import models.lol.Summoner;
 import models.weather.Temperature;
 import play.data.Form;
@@ -17,6 +18,7 @@ import static play.libs.Json.toJson;
 public class Statuses extends Controller {
 	public static Form<Temperature> temperatureForm = Form.form(Temperature.class);
 	public static Form<Summoner> summonerForm = Form.form(Summoner.class);
+	public static Form<CardGames> gameForm = Form.form(CardGames.class);
 
 	public static class StatusData {
 		public final Form form;
@@ -32,6 +34,7 @@ public class Statuses extends Controller {
 		Map<String, StatusData> statusData = new HashMap<>();
 		statusData.put("temperature", new StatusData(temperatureForm, Temperature.isAvailable()));
 		statusData.put("summoner", new StatusData(summonerForm, Summoner.isAvailable()));
+		statusData.put("game", new StatusData(gameForm, true));
 		return statusData;
 	}
 
@@ -54,6 +57,18 @@ public class Statuses extends Controller {
 		} else {
 			Summoner summoner = filledForm.get();
 			models.status.Status status = new models.status.Status(summoner.name, summoner);
+			status.save();
+			return redirect(routes.Application.index());
+		}
+	}
+
+	public static Result addGame() {
+		Form<CardGames> filledForm = gameForm.bindFromRequest();
+		if (filledForm.hasErrors()) {
+			return redirect(routes.Application.index());
+		} else {
+			CardGames game = filledForm.get();
+			models.status.Status status = new models.status.Status(game.baseURL, game);
 			status.save();
 			return redirect(routes.Application.index());
 		}

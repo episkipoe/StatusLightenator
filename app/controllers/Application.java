@@ -20,6 +20,11 @@ public class Application extends Controller {
 		return badRequest(index.render(DMXDevice.all(), deviceForm, models.status.Status.all(), Statuses.getStatusData()));
 	}
 
+	/**
+	 * Sends light data to a dmx device
+	 * @param deviceId
+	 * @return
+	 */
 	public static Result send(Long deviceId) {
 		List<Light> lights = new ArrayList<>();
 		boolean first=true;
